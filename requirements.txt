@@ -6,13 +6,22 @@ fastapi>=0.100.0
 faster-whisper>=1.0.0
 
 # Deep learning / speaker embeddings
-torch>=2.0.0
-torchaudio>=2.0.0
+# Lightning (T4) runs Linux + CUDA; install CUDA-matched PyTorch wheels.
+# The error you hit (`undefined symbol: torch_library_impl`) is typically a
+# torch/torchaudio ABI mismatch from mixing wheels/channels.
+#
+# IMPORTANT: pip honors these index lines in requirements files.
+# Lightning image reports PyTorch 2.8.0+cu128 and CUDA 12.8, so pin to cu128.
+--index-url https://download.pytorch.org/whl/cu128
+--extra-index-url https://pypi.org/simple
+torch==2.8.0+cu128
+torchaudio==2.8.0+cu128
 pyannote.audio>=3.1.0
 
 # Audio I/O & preprocessing (ffmpeg CLI must be installed on the host)
 soundfile>=0.12.0
-numpy>=1.24.0
+# Keep numpy <2 for widest ML wheel compatibility
+numpy<2
 
 # HTTP client for callers
 httpx>=0.25.0

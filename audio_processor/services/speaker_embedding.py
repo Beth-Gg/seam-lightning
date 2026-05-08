@@ -2,11 +2,12 @@ import torchaudio
 
 if not hasattr(torchaudio, "set_audio_backend"):
     torchaudio.set_audio_backend = lambda x: None  # type: ignore[attr-defined]
+
 import logging
-import torch
 from typing import Tuple
 
 import numpy as np
+import torch
 
 from pyannote.audio import Inference, Model
 
